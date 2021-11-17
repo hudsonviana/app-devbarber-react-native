@@ -1,2 +1,2 @@
 # app
- App Android para barbeiros criado com React Native
+Modelo de App Android para barbeiros criado com React Native.
