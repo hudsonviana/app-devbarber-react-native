@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import { useNavigation } from "@react-navigation/native";
 import { 
     Container,
@@ -17,6 +17,8 @@ import MylocationIcon from '../../assets/my_location.svg';
 export  default () => {
 
     const navigation = useNavigation();
+
+    const [locationText, setLocationText] = useState('');
     
     return (
         <Container>
@@ -29,7 +31,12 @@ export  default () => {
                 </HeaderArea>
 
                 <LocationArea>
-                    <LocationInput />
+                    <LocationInput 
+                        placeholder="Onde você está?" 
+                        placeholderTextColor="#ffffff" 
+                        value={locationText} 
+                        onChangeText={t=>setLocationText(t)}
+                    />
                     <LocationFinder>
                         <MylocationIcon width="24" height="24" fill="#ffffff" />
                     </LocationFinder>
