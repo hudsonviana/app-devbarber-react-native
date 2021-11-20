@@ -68,7 +68,7 @@ export  default () => {
             lng = coords.longitude;
         }
 
-        let res = await Api.getBarbers(lat, lng);
+        let res = await Api.getBarbers(lat, lng, locationText);
         //console.log(res);
         if (res.error == '') {
             if (res.loc) {
@@ -81,13 +81,19 @@ export  default () => {
 
         setLoading(false);
     }
-
+    
+    // código para chamar a função assim que a tela é iniciada
     useEffect(()=>{
         getBarbers();
     }, []);
     
     const onRefresh = () => {
         setRefreshing(false);
+        getBarbers();
+    }
+
+    const handleLocationSearch = () => {
+        setCoords({});
         getBarbers();
     }
 
@@ -108,7 +114,8 @@ export  default () => {
                         placeholder="Onde você está?" 
                         placeholderTextColor="#ffffff" 
                         value={locationText} 
-                        onChangeText={t=>setLocationText(t)}
+                        onChangeText={t=>setLocationText(t)} 
+                        onEndEditing={handleLocationSearch}
                     />
                     <LocationFinder onPress={handleLocationFinder}>
                         <MylocationIcon width="24" height="24" fill="#ffffff" />
