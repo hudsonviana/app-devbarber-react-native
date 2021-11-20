@@ -1,5 +1,9 @@
 import React, {useState} from "react";
+import { Platform } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import { request, PERMISSIONS } from 'react-native-permissions';
+import Geolocation from "@react-native-community/geolocation";
+
 import { 
     Container,
     Scroller,
@@ -8,7 +12,8 @@ import {
     SearchButton,
     LocationArea,
     LocationInput,
-    LocationFinder 
+    LocationFinder, 
+    LoadingIcon
 } from "./styles";
 
 import SearchIcon from '../../assets/search.svg';
@@ -19,6 +24,35 @@ export  default () => {
     const navigation = useNavigation();
 
     const [locationText, setLocationText] = useState('');
+    const [coords, setCoords] = useState(null);
+    const [loading, setLoading] = useState(false);
+    const [list, setList] = useState([]);
+
+    const handleLocationFinder = async () => {
+        setCoords(null);
+        let result = await request(
+            Platform.OS === 'ios' ?
+            PERMISSIONS.IOS.LOCATION_WHEN_IN_USE
+            :
+            PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION
+        );
+
+        if (result == 'granted') {
+            setLoading(true);
+            setLocationText('');
+            setList([]);
+
+            Geolocation.getCurrentPosition((info)=>{
+                //console.log(info);
+                setCoords(info.coords);
+                getBarbers();
+            });
+        }
+    }
+
+    const getBarbers = async () => {
+
+    }
     
     return (
         <Container>
@@ -37,10 +71,14 @@ export  default () => {
                         value={locationText} 
                         onChangeText={t=>setLocationText(t)}
                     />
-                    <LocationFinder>
+                    <LocationFinder onPress={handleLocationFinder}>
                         <MylocationIcon width="24" height="24" fill="#ffffff" />
                     </LocationFinder>
                 </LocationArea>
+
+                {loading &&
+                    <LoadingIcon size="large" color="#fff" />
+                }
             </Scroller>
         </Container>
     );
