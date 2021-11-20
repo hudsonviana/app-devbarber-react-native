@@ -1,6 +1,8 @@
 import React from "react";
 import styled from "styled-components/native";
 
+import Stars from '../components/Stars';
+
 const Area = styled.TouchableOpacity`
     background-color: #ffffff;
     margin-bottom: 20px;
@@ -39,14 +41,13 @@ const SeeProfileButtonText = styled.Text`
     color: #268596; 
 `;
 
-
 export default ({data}) => {
     return (
         <Area>
             <Avatar source={{uri: data.avatar}} />
             <InfoArea>
                 <UserName>{data.name}</UserName>
-
+                <Stars stars={data.stars} showNumber={true} />
                 <SeeProfileButton>
                     <SeeProfileButtonText>Ver perfil</SeeProfileButtonText>
                 </SeeProfileButton>
