@@ -49,7 +49,7 @@ export  default () => {
             setList([]);
 
             Geolocation.getCurrentPosition((info)=>{
-                console.log(info);
+                //console.log(info);
                 setCoords(info.coords);
                 getBarbers();
             });
@@ -60,8 +60,16 @@ export  default () => {
         setLoading(true);
         setList([]);
 
-        let res = await Api.getBarbers();
-        console.log(res);
+        let lat = null;
+        let lng = null;
+
+        if (coords) {
+            lat = coords.latitude;
+            lng = coords.longitude;
+        }
+
+        let res = await Api.getBarbers(lat, lng);
+        //console.log(res);
         if (res.error == '') {
             if (res.loc) {
                 setLocationText(res.loc);
