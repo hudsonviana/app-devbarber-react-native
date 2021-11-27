@@ -55,7 +55,7 @@ export default () => {
 				});
 
 			} else {
-				alert("Erro: "+res.error);
+				alert("Erro: " + res.error);
 			}
 		} else {
 			alert("Preencha todos os campos!");

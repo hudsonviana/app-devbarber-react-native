@@ -1,6 +1,7 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const BASE_API = 'https://api.b7web.com.br/devbarber/api';
+//const BASE_API = 'https://api.b7web.com.br/devbarber/api';
+const BASE_API = 'http://192.168.1.105:80/estetica/public/api';
 
 export default {
     checkToken: async (token) => {
@@ -28,7 +29,8 @@ export default {
         return json;
     },
     signUp: async (name, email, password) => {
-        const req = await fetch(`${BASE_API}/user`, {
+        //const req = await fetch(`${BASE_API}/user`, {
+        const req = await fetch(`${BASE_API}/auth/register`, {
             method: 'POST',
             headers: {
                 Accept: 'application/json',
