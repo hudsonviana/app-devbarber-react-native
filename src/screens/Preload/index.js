@@ -20,26 +20,27 @@ export default () => {
 				//valida o token
 				let res = await Api.checkToken(token);
 				if (res.token) {
-					navigation.navigate('SignIn'); // introduzido
-					console.log(token); // introduzido
-				 	// await AsyncStorage.setItem('token', res.token);
+					// console.log(token); // introduzido
+				 	await AsyncStorage.setItem('token', res.token);
 
-				 	// userDispatch({
-				 	// 	type: 'setAvatar',
-				 	// 	payload: {
-				 	// 		avatar: res.data.avatar
-				 	// 	}
-				 	// });
+				 	userDispatch({
+				 		type: 'setAvatar',
+				 		payload: {
+				 			avatar: res.data.avatar
+				 		}
+				 	});
 
-				 	// navigation.reset({
-				 	// 	routes: [{name: 'MainTab'}]
-				 	// });
+				 	navigation.reset({
+				 		routes: [{name: 'MainTab'}]
+				 	});
 
 				} else {
+					// console.log('Achou um token, mas não é válido');
 				 	navigation.navigate('SignIn');
 				}
 			} else {
 				//manda pro login
+				// console.log('Não achou um token');
 				navigation.navigate('SignIn');
 			}
 		};
