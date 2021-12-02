@@ -4,6 +4,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 const BASE_API = 'http://192.168.1.105:80/estetica/public/api';
 
 export default {
+
     checkToken: async (token) => {
         const req = await fetch(`${BASE_API}/auth/refresh`, {
             method: 'POST',
@@ -16,6 +17,7 @@ export default {
         const json = await req.json();
         return json;
     },
+
     signIn: async (email, password) => {
         const req = await fetch(`${BASE_API}/auth/login`, {
             method: 'POST',
@@ -28,6 +30,7 @@ export default {
         const json = await req.json();
         return json;
     },
+
     signUp: async (name, email, password) => {
         //const req = await fetch(`${BASE_API}/user`, {
         const req = await fetch(`${BASE_API}/auth/register`, {
@@ -41,6 +44,7 @@ export default {
         const json = await req.json();
         return json;
     },
+
     getBarbers: async (lat=null, lng=null, address=null) => {
         const token = await AsyncStorage.getItem('token');
 
