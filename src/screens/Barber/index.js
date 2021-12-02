@@ -16,12 +16,14 @@ export  default () => {
         name: route.params.name,
         stars: route.params.stars
     });
+    const [loading, setLoading] = useState(false);
 
     useEffect(()=>{
         const getBarberInfo = async () => {
             let json = await Api.getBarber(userInfo.id);
             if (json.error == '') {
-                console.log(json);
+                //console.log(json);
+                setUserInfo(json.data);
             } else {
                 alert("Erro: " + json.error);
             }
