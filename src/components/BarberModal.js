@@ -8,7 +8,7 @@ const Modal = styled.Modal``;
 
 const ModalArea = styled.View`
     flex: 1;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.7);
     justify-content: flex-end;
 `;
 
@@ -50,6 +50,21 @@ const UserName = styled.Text`
     font-weight: bold;
 `;
 
+const ServiceInfo = styled.View`
+    flex-direction: row;    
+    justify-content: space-between;
+`;
+
+const ServiceName = styled.Text`
+    font-size: 16px;
+    font-weight: bold;
+`;
+
+const ServicePrice = styled.Text`
+    font-size: 16px;
+    font-weight: bold;
+`;
+
 export default ({show, setShow, user, service}) => {
 
     const navigation = useNavigation();
@@ -66,6 +81,7 @@ export default ({show, setShow, user, service}) => {
         >
             <ModalArea>
                 <ModalBody>
+
                     <CloseButton onPress={handleCloseButton}>
                         <ExpandIcon width="40" height="40" fill="#000000" />
                     </CloseButton>
@@ -76,6 +92,16 @@ export default ({show, setShow, user, service}) => {
                             <UserName>{user.name}</UserName>
                         </UserInfo>
                     </ModalItem>
+
+                    {service != null &&
+                        <ModalItem>
+                            <ServiceInfo>
+                                <ServiceName>{user.services[service].name}</ServiceName>
+                                <ServicePrice>R$ {user.services[service].price.toFixed(2)}</ServicePrice>
+                            </ServiceInfo>
+                        </ModalItem>
+                    } 
+
 
 
                 </ModalBody>
