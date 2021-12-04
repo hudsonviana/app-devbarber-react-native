@@ -24,7 +24,14 @@ import {
     UserInfoName,
     UserFavButton,
     BackButton,
-    LoadingIcon
+    LoadingIcon,
+    ServiceItem,
+    ServiceInfo,
+    ServiceName,
+    ServicePrice,
+    ServiceChooseButton,
+    ServieBtnText,
+    ServicesTitle
 } from "./styles";
 
 import Api from "../../Api";
@@ -97,9 +104,22 @@ export  default () => {
                         <LoadingIcon size="large" color="#000000" />
                     }
 
-                    <ServiceArea>
-
-                    </ServiceArea>
+                    {userInfo.services &&
+                        <ServiceArea>
+                            <ServicesTitle>Lista de Serviços</ServicesTitle>
+                            {userInfo.services.map((item, key)=>(
+                                <ServiceItem key={key}>
+                                    <ServiceInfo>
+                                        <ServiceName>{item.name}</ServiceName>
+                                        <ServicePrice>R$ {item.price}</ServicePrice>
+                                    </ServiceInfo>
+                                    <ServiceChooseButton>
+                                        <ServieBtnText>Agendar</ServieBtnText>
+                                    </ServiceChooseButton>
+                                </ServiceItem>
+                            ))}
+                        </ServiceArea>
+                    }
                     <TestimonialArea>
 
                     </TestimonialArea>
