@@ -10,6 +10,8 @@ import BackIcon from '../../assets/back.svg';
 import NavPrevIcon from '../../assets/nav_prev.svg';
 import NavNextIcon from '../../assets/nav_next.svg';
 
+import BarberModal from '../../components/BarberModal';
+
 import { 
     Container,
     Scroller,
@@ -53,8 +55,11 @@ export  default () => {
         name: route.params.name,
         stars: route.params.stars
     });
+
     const [loading, setLoading] = useState(false);
     const [favorited, setFavorited] = useState(false);
+    const [selectedService, setSelectedService] = useState(null);
+    const [showModal, setShowModal] = useState(false);
 
     useEffect(()=>{
         const getBarberInfo = async () => {
@@ -79,6 +84,11 @@ export  default () => {
     const handleFavClick = () => {
         setFavorited(!favorited);
         Api.setFavorite(userInfo.id);
+    }
+
+    const handleServiceChoose = (key) => {
+        setSelectedService(key);
+        setShowModal(true);
     }
     
     return (
@@ -131,7 +141,7 @@ export  default () => {
                                         <ServiceName>{item.name}</ServiceName>
                                         <ServicePrice>R$ {item.price}</ServicePrice>
                                     </ServiceInfo>
-                                    <ServiceChooseButton>
+                                    <ServiceChooseButton onPress={()=>handleServiceChoose(key)}>
                                         <ServieBtnText>Agendar</ServieBtnText>
                                     </ServiceChooseButton>
                                 </ServiceItem>
@@ -165,6 +175,14 @@ export  default () => {
             <BackButton onPress={handleBackButton}>
                 <BackIcon width="44" height="44" fill="#ffffff" />
             </BackButton>
+
+            <BarberModal
+                show={showModal}
+                setShow={setShowModal}
+                user={userInfo}
+                service={selectedService}
+            />
+
         </Container>
     );
 }
